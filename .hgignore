@@ -7,3 +7,5 @@ syntax: glob
 *.swp
 *.a
 *~
+mkcastlefs
+castle_probe_device
