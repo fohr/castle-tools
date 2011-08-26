@@ -1,0 +1,36 @@
+Summary: FS tracer
+Name: castle-trace
+Version: @@SOURCEVER@@
+Release: %{?release}%{?!release:1}
+License: No
+Group: Filesystem
+Source0: %{name}-%{version}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+
+BuildRequires: libcastle-devel
+
+%description
+Tracing tool for castle-fs
+
+%prep
+%setup -q -n %{name}-%{version}
+
+%build
+make all
+
+%install
+rm -rf %{buildroot}
+export DESTDIR=%{buildroot}
+mkdir -p %{buildroot}/usr/sbin
+make install BUILD_ROOT=%{buildroot}
+
+%clean
+rm -rf %{buildroot}
+
+%files
+%defattr(-,root,root,-)
+/usr/sbin/castle-trace
+
+%changelog
+* Wed Sep  8 2010 Andrew Suffield <asuffield@acunu.com> - %{buildver}-%{buildrev}
+- Initial package
