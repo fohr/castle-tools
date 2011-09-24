@@ -31,7 +31,6 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/etc/udev/rules.d/
 mkdir -p %{buildroot}/etc/castle-fs
 cp udev/castle-fs.rules %{buildroot}/etc/udev/rules.d/
-cp udev/udev-watch %{buildroot}/etc/castle-fs/
 
 make -C utils install DESTDIR=%{buildroot}
 
@@ -57,7 +56,6 @@ getent group castle >/dev/null || groupadd -r castle
 %defattr(-,root,root,-)
 /etc/rc.d/init.d/*
 /etc/udev/rules.d
-/etc/castle-fs/udev-watch
 /usr/share/castle-fs
 /usr/sbin/*
 /sbin/mkcastlefs
