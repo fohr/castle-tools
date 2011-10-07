@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -eu
+
+. `dirname $0`/castle-bash-utils
+
+function usage {
+    echo "Usage: `basename $0` [-t col|ver] <id>"
+    echo "    -t with col, the id is a collection id, with ver it is a version id."
+    echo "       All ids are in hex"
+    exit 1
+}
+
+if [ $# -ne 3 ]; then
+    usage
+fi
+
+id=$(want_unprefixed_hex $3)
+
+if [ $2 = "col" ]; then
+    version=$(want_unprefixed_hex `cat /sys/fs/castle-fs/collections/$id/version`)
+elif [ $2 = "ver" ]; then
+    version=$id
+else
+    usage
+fi
+
+vertree_id=$(cat /sys/fs/castle-fs/versions/$version | grep "VertreeId:" | sed -e "s/.*0x\([0-9a-f]*\)/\1/g")
+
+echo $(want_prefixed_hex $vertree_id)

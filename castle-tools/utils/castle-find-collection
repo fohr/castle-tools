@@ -2,14 +2,24 @@
 
 set -eu
 
+. `dirname $0`/castle-bash-utils
+
+if [ $# -ne 1 ]; then
+    echo "Usage: `basename $0` <collection_name>"
+    exit 1
+fi
+
 name=$1
 
-for col in $(seq 0 $((0x`cat /sys/fs/castle-fs/collections/number`))); do 
-    col=$(printf '%x' $col)
+for col in /sys/fs/castle-fs/collections/*; do 
+    col=`basename $col`
     [ -e /sys/fs/castle-fs/collections/$col/name ] || continue; 
 
     if [ "$(cat /sys/fs/castle-fs/collections/$col/name)" = ${name} ]; then
-	echo $col
+	echo $(want_prefixed_hex $col)
 	exit 0
     fi
 done
+
+echo "Not found"
+exit 2

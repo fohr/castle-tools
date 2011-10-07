@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -eu
+
+. `dirname $0`/castle-bash-utils
+
+function usage {
+    echo "Usage: `basename $0` <collection_name_or_id>"
+    echo "   tries to find a collection with the name given, if not present"
+    echo "   looks for a collection with that id"
+    exit 1
+}
+
+if [ $# -ne 1 ]; then
+    usage
+fi
+
+set +e
+col=`castle-find-collection $1`
+ret=$?
+set -e
+if [ $ret -eq 0 ]; then
+    col=$(want_unprefixed_hex $col)
+else
+    col=$(want_unprefixed_hex $1)
+fi
+
+if [ ! -e /sys/fs/castle-fs/collections/$col/version ]; then
+    echo "Collection not found"
+    exit 2
+fi
+
+version=`cat /sys/fs/castle-fs/collections/$col/version`
+
+echo $(want_prefixed_hex $version)

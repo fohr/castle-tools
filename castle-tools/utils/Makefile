@@ -51,6 +51,9 @@ install: castle_probe_device mkcastlefs
 	install -D castle-smart-spank-drive $(DESTDIR)/usr/sbin/castle-smart-spank-drive
 	install -D castle-smart-process-drive $(DESTDIR)/usr/sbin/castle-smart-process-drive
 	install -D castle-find-collection $(DESTDIR)/usr/sbin/castle-find-collection
+	install -D castle-get-vertree $(DESTDIR)/usr/sbin/castle-get-vertree
+	install -D castle-get-version $(DESTDIR)/usr/sbin/castle-get-version
+	install -D castle-bash-utils $(DESTDIR)/usr/sbin/castle-bash-utils
 	install -D castle-scan $(DESTDIR)/usr/sbin/castle-scan
 	install -D castle-claim-empty $(DESTDIR)/usr/sbin/castle-claim-empty
 	install -D castle-create $(DESTDIR)/usr/sbin/castle-create
