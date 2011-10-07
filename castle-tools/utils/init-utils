@@ -144,6 +144,10 @@ function load_fs_and_claim {
       castle-probe-device "$dev"
     done
 
+    touch /var/lib/castle-fs/dirty
+    sync
+    sleep 1
+
     init_kernel_fs
 
     if [ -f /etc/acunu/build_id.txt ]; then
@@ -160,10 +164,6 @@ function load_fs_and_claim {
         description=$(cat /etc/acunu/status_description.txt)
         castle-cli environment description "$description"
     fi
-
-    touch /var/lib/castle-fs/dirty
-    sync
-    sleep 1
 
     for dev in "${devs[@]}"
     do
