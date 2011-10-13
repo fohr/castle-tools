@@ -53,6 +53,7 @@ install: castle_probe_device mkcastlefs
 	install -D castle-find-collection $(DESTDIR)/usr/sbin/castle-find-collection
 	install -D castle-get-vertree $(DESTDIR)/usr/sbin/castle-get-vertree
 	install -D castle-get-version $(DESTDIR)/usr/sbin/castle-get-version
+	install -D castle-get-keys-estimate $(DESTDIR)/usr/sbin
 	install -D castle-bash-utils $(DESTDIR)/usr/sbin/castle-bash-utils
 	install -D castle-scan $(DESTDIR)/usr/sbin/castle-scan
 	install -D castle-claim-empty $(DESTDIR)/usr/sbin/castle-claim-empty

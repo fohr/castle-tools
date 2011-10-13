@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -eu
+
+. `dirname $0`/castle-bash-utils
+
+function usage {
+    echo "Usage: `basename $0` <vertree_id>.  All ids are in hex."
+    exit 1
+}
+
+if [ $# -ne 1 ]; then
+    usage
+fi
+
+vertree_id=$(want_unprefixed_hex $1)
+
+keys=0
+
+for array in /sys/fs/castle-fs/vertrees/$vertree_id/arrays/*; do
+    state=`cat $array/merge_state`
+    if [ $state != "output" ]; then
+        this_keys=`echo $(awk '/^Item\ Count:/ { print $3 }' $array/size)`
+        keys=$(($keys+$this_keys))
+    fi
+done
+
+echo $keys
