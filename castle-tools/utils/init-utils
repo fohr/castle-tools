@@ -67,13 +67,32 @@ function init_kernel_fs {
     fi
 }
 
+
 function unmount_kernel_fs {
     if kernel_fs_running; then
         echo "Unmounting Kernel FS..."
 
+		local CTRL_PROG_PID=$(castle-cli ctrl_prog_deregister true)
+		if [ $CTRL_PROG_PID -ne 0 ]; then
+			echo "Waiting for control program ${CTRL_PROG_PID} to shut down."
+			PID_EXISTS="yes"
+            for i in `seq 650`; do
+				PID_EXISTS=`ps -p ${CTRL_PROG_PID} > /dev/null && echo "yes" || echo "no"`
+				if [ $PID_EXISTS == "no" ]; then
+					break
+				fi
+                # Wait 0.1s
+                usleep 100000
+			done
+			if [ $PID_EXISTS == "yes" ]; then
+				echo "Control program didn't shut down in 65s, kill-9-ing."
+				kill -9 ${CTRL_PROG_PID}
+			fi
+		fi
+
         if [ "$RUNLEVEL" = 0 ] || [ "$RUNLEVEL" = 6 ]
         then
-            echo "Looks like we're shutting down, will wait until castle-fs is unloaded (maybe forever)"
+            echo "Looks like we're shutting down, will wait until castle-fs is unloaded"
             while [ -e $CONTROL_FILE ]
             do
               rmmod castle_fs || true
