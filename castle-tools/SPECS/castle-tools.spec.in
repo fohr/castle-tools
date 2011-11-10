@@ -29,7 +29,6 @@ make -C utils
 rm -rf %{buildroot}
 
 mkdir -p %{buildroot}/etc/udev/rules.d/
-mkdir -p %{buildroot}/etc/castle-fs
 cp udev/castle-fs.rules %{buildroot}/etc/udev/rules.d/
 
 make -C utils install DESTDIR=%{buildroot}
