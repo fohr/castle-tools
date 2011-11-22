@@ -48,7 +48,19 @@ function init_kernel_fs {
         fi
 
         echo "Castle FS kernel module not found, trying to insert."
-        modprobe castle-fs castle_cache_size="$cache_size" $CASTLE_MODULE_PARAMS
+        RDA_LVL_DEFINED="false"
+        for PARAMETER in ${CASTLE_MODULE_PARAMS}; do
+            BASE=`echo ${PARAMETER} | awk -F = '{print $1}'`
+            if [ ${BASE} == "castle_rda_lvl" ]; then
+                RDA_LVL_DEFINED="true"
+            fi
+        done
+        # If we are on ec2, and castle_rda_lvl is not defined in CASTLE_MODULE_PARAMS, then default it to 1-RDA
+        if [ -e  /etc/acunu/ec2-ephemeral-disks -a ${RDA_LVL_DEFINED} == "flse" ]; then
+            modprobe castle-fs castle_cache_size="$cache_size" $CASTLE_MODULE_PARAMS castle_rda_lvl=1
+        else
+            modprobe castle-fs castle_cache_size="$cache_size" $CASTLE_MODULE_PARAMS
+        fi
         echo "Inserted kernel module"
         # Wait up to 5 seconds for the control file to appear
         # udev renaming is sometimes slow
