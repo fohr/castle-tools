@@ -7,5 +7,6 @@ syntax: glob
 *.swp
 *.a
 *~
-mkcastlefs
-castle_probe_device
+castle-tools/utils/mkcastlefs
+castle-tools/utils/castle_probe_device
+castle-trace/castle-trace
