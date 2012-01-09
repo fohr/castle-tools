@@ -492,6 +492,7 @@ static void teardown_trace(void)
 
 static void handle_sigint(int sig)
 {
+    signal(sig, SIG_IGN);
     printf("Quitting on signal\n");
     stop_trace();
     stop_tracers();
