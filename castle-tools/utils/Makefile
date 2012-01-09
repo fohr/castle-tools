@@ -25,12 +25,13 @@ all: castle_probe_device mkcastlefs
 ##
 
 castle_probe_device: castle_probe_device.o
-	gcc $(CFLAGS) castle_probe_device.o -o $@
+	gcc $(CFLAGS) $^ -o $@
 
 mkcastlefs: mkcastlefs.o
+	gcc $(CFLAGS) $^ -o $@
 
 %.o: %.c $(HEADER_FILES)
-	gcc $(CFLAGS) -c -o $*.o $*.c
+	gcc $(CFLAGS) -c $< -o $@
 
 tags: $(SOURCE_FILES) $(HEADER_FILES)
 	ctags $(SOURCE_FILES) $(HEADER_FILES)
