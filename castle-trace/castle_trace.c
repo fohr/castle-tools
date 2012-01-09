@@ -523,6 +523,7 @@ int main(int argc, char *argv[])
     signal(SIGHUP, handle_sigint);
     signal(SIGTERM, handle_sigint);
     signal(SIGALRM, handle_sigint);
+    signal(SIGPIPE, handle_sigint);
 
     if((ret = handle_args(argc, argv)))
         goto err0;
