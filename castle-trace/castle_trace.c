@@ -130,7 +130,7 @@ static void decode_trace(c_trc_evt_t *evt)
 
     if (evt->magic != CASTLE_TRACE_MAGIC)
     {
-        printf("Wrong magic: 0x%x, can only handle 0x%x\n", evt->magic, CASTLE_TRACE_MAGIC);
+        fprintf(stderr, "Wrong magic: 0x%x, can only handle 0x%x\n", evt->magic, CASTLE_TRACE_MAGIC);
         return;
     }
 
@@ -203,7 +203,7 @@ static void decode_trace(c_trc_evt_t *evt)
 
         /* Unknown. */
         default:
-            printf("Unknown provider: %d\n", evt->provider);
+            fprintf(stderr, "Unknown provider: %d\n", evt->provider);
             break;
     }
 }
@@ -220,18 +220,18 @@ static int open_trace_file(struct tracer *tracer)
 
     if(strlen(debugfs_dir) + strlen(trace_dir) > MAX_FILENAME_LENGTH - 5)
     {
-        printf("Could not open the trace file, because the dir name is too long.\n");
+        fprintf(stderr, "Could not open the trace file, because the dir name is too long.\n");
         return -EINVAL;
     }
 
     snprintf(file_name, sizeof(file_name), "%s/%s/trace%d", debugfs_dir, trace_dir, tracer->cpu);
-    printf("Opening trace file: %s\n", file_name);
+    fprintf(stderr, "Opening trace file: %s\n", file_name);
     tracer->trace_fd = open(file_name, O_RDONLY | O_NONBLOCK);
     if(tracer->trace_fd < 0)
     {
-        printf("Could not open trace file: %s\n", file_name);
-        printf("Is debugfs mounted under: %s?\n", debugfs_dir);
-        printf("Mount with: # mount -t debugfs none %s\n\n", debugfs_dir);
+        fprintf(stderr, "Could not open trace file: %s\n", file_name);
+        fprintf(stderr, "Is debugfs mounted under: %s?\n", debugfs_dir);
+        fprintf(stderr, "Mount with: # mount -t debugfs none %s\n\n", debugfs_dir);
         return errno;
     }
 
@@ -305,7 +305,7 @@ static void tracer_signal(int state)
             tracers_running--;
             break;
         default:
-            printf("ERROR: unknown tracer state: %d\n", state);
+            fprintf(stderr, "ERROR: unknown tracer state: %d\n", state);
             break;
     }
     pthread_cond_signal(&mt_cond);
@@ -386,7 +386,7 @@ static void wait_tracers_start(int nr_cpus)
     {
         if(run_state != RUN_STATE_STARTING)
         {
-            printf("ERROR: run state %d while waiting for tracers to start.\n", run_state);
+            fprintf(stderr, "ERROR: run state %d while waiting for tracers to start.\n", run_state);
             goto out;
         }
         if(tracers_running + tracers_failed == nr_cpus)
@@ -424,8 +424,8 @@ static int open_connection(void)
 
     ret = castle_connect(&connection_obj);
     if(ret)
-        printf("Failed to open connection to the filesystem (err=%d). Make sure its running.\n",
-                ret);
+        fprintf(stderr, "Failed to open connection to the filesystem (err=%d). "
+                "Make sure it's running.\n", ret);
 
     return ret;
 }
@@ -441,7 +441,7 @@ static int setup_trace(void)
 
     ret = castle_trace_setup(connection_obj, trace_dir, strlen(trace_dir)+1);
     if(ret)
-        printf("Could not setup tracing in the filesystem (err=%d).\n", ret);
+        fprintf(stderr, "Could not setup tracing in the filesystem (err=%d).\n", ret);
 
     return ret;
 }
@@ -452,7 +452,7 @@ static int start_trace(void)
 
     if((ret = castle_trace_start(connection_obj)))
     {
-        printf("Could not start tracing in the filesystem (err=%d).\n", ret);
+        fprintf(stderr, "Could not start tracing in the filesystem (err=%d).\n", ret);
         return ret;
     }
 
@@ -470,7 +470,7 @@ static void stop_trace(void)
 
     ret = castle_trace_stop(connection_obj);
     if(ret)
-        printf("Error: Failed to stop the trace, err=%d\n", ret);
+        fprintf(stderr, "Error: Failed to stop the trace, err=%d\n", ret);
 }
 
 static void stop_tracers(void)
@@ -487,13 +487,13 @@ static void teardown_trace(void)
 
     ret = castle_trace_teardown(connection_obj);
     if(ret)
-        printf("Error: Failed to teardown the trace, err=%d\n", ret);
+        fprintf(stderr, "Error: Failed to teardown the trace, err=%d\n", ret);
 }
 
 static void handle_sigint(int sig)
 {
     signal(sig, SIG_IGN);
-    printf("Quitting on signal\n");
+    fprintf(stderr, "Quitting on signal\n");
     stop_trace();
     stop_tracers();
 }
@@ -508,7 +508,7 @@ static void wait_tracers_stop(int nr_cpus)
             continue;
         ret = pthread_join(tracers[cpu].thread, NULL);
         if(ret)
-            printf("Failed to join thread on CPU=%d\n", cpu);
+            fprintf(stderr, "Failed to join thread on CPU=%d\n", cpu);
     }
 }
 
@@ -546,7 +546,7 @@ int main(int argc, char *argv[])
     wait_tracers_stop(ncpus);
     teardown_trace();
     close_connection();
-    printf("Exiting cleanly.\n");
+    fprintf(stderr, "Exiting cleanly.\n");
 
     return 0;
 
@@ -557,7 +557,7 @@ err2:
 err1:
     close_connection();
 err0:
-    printf("Exiting erroneously, ret=%d.\n", ret);
+    fprintf(stderr, "Exiting erroneously, ret=%d.\n", ret);
 
     return ret;
 }
