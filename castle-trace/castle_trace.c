@@ -321,7 +321,7 @@ static inline void make_timespec(struct timespec *tsp, long delta_msec)
     tsp->tv_nsec = 1000L * now.tv_usec;
 
     tsp->tv_nsec += (delta_msec * 1000000L);
-    if (tsp->tv_nsec > 1000000000L) 
+    if (tsp->tv_nsec > 1000000000L)
     {
         long secs = tsp->tv_nsec / 1000000000L;
         tsp->tv_sec += secs;
@@ -389,7 +389,7 @@ static void wait_tracers_start(int nr_cpus)
             printf("ERROR: run state %d while waiting for tracers to start.\n", run_state);
             goto out;
         }
-        if(tracers_running + tracers_failed == nr_cpus) 
+        if(tracers_running + tracers_failed == nr_cpus)
             goto out;
         make_timespec(&ts, 1000);
         pthread_cond_timedwait(&mt_cond, &mt_mutex, &ts);
@@ -529,10 +529,10 @@ int main(int argc, char *argv[])
     if((ret = handle_args(argc, argv)))
         goto err0;
 
-    if((ret = open_connection())) 
+    if((ret = open_connection()))
         goto err0;
 
-    if((ret = setup_trace())) 
+    if((ret = setup_trace()))
         goto err1;
 
     if((ret = start_tracers(ncpus)))
