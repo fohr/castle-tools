@@ -119,7 +119,18 @@ static char* merge_var_name[] = {
                         [TRACE_DA_MERGE_UNIT_GET_C2B_NS_ID]             = "get_c2b_ns",
                         [TRACE_DA_MERGE_UNIT_MOBJ_COPY_NS_ID]           = "mobj_copy_ns",
                         [TRACE_DA_MERGE_UNIT_CACHE_BTREE_EFFICIENCY_ID] = "pct_btree_efficiency",
-                        [TRACE_DA_MERGE_UNIT_CACHE_DATA_EFFICIENCY_ID]  = "pct_data_efficiency"};
+                        [TRACE_DA_MERGE_UNIT_CACHE_DATA_EFFICIENCY_ID]  = "pct_data_efficiency"
+};
+
+static char* io_sched_var_name[] = {
+                        [TRACE_IO_SCHED_NUM_READ_IOS_ID]            = "read_ios",
+                        [TRACE_IO_SCHED_NUM_MERGE_IOS_ID]           = "merge_ios",
+                        [TRACE_IO_SCHED_NUM_CHECKPOINT_IOS_ID]      = "checkpoint_ios",
+                        [TRACE_IO_SCHED_BYTES_READ_IOS_ID]          = "read_bytes",
+                        [TRACE_IO_SCHED_BYTES_MERGE_IOS_ID]         = "merge_bytes",
+                        [TRACE_IO_SCHED_BYTES_CHECKPOINT_IOS_ID]    = "checkpoint_bytes",
+};
+
 
 #define ts_fmt         "%lu, %lu"
 #define ts_val(_evt)  (_evt)->timestamp.tv_sec, (_evt)->timestamp.tv_usec
@@ -151,6 +162,7 @@ static void decode_trace(c_trc_evt_t *evt)
             printf("%s, "ts_fmt")\n", s, ts_val(evt));
             break;
 
+
         /* Merge. */
         case TRACE_DA_MERGE:
         case TRACE_DA_MERGE_UNIT:
@@ -162,6 +174,17 @@ static void decode_trace(c_trc_evt_t *evt)
 
             if (evt->type == TRACE_VALUE)
                 sprintf(s, "%s, %lu", s, evt->v4);  /* value */
+
+            printf("%s, "ts_fmt")\n", s, ts_val(evt));
+            break;
+
+        /* IO sched. */
+        case TRACE_IO_SCHED:
+            sprintf(s, "%sio_sched_%s", s,
+                    io_sched_var_name[evt->var]);  /* stat name */
+
+            if (evt->type == TRACE_VALUE)
+                sprintf(s, "%s, %lu", s, evt->v1);   /* value */
 
             printf("%s, "ts_fmt")\n", s, ts_val(evt));
             break;
