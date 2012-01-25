@@ -195,9 +195,19 @@ static void decode_trace(c_trc_evt_t *evt)
                         p2, ts_val(evt));
             }
             else
+            if ((evt->type == TRACE_START) || (evt->type == TRACE_END))
+            {
+                /* For start/end events, only print the timestamp. */
+                printf("***%s(%s, "ts_fmt")\n",
+                        trace_type_name[evt->type], cache_var_name[evt->var], ts_val(evt));
+            }
+            else
+            {
+                /* For everything else, print the value as well. */
                 printf("***%s(%s, %lu, "ts_fmt")\n",
                         trace_type_name[evt->type], cache_var_name[evt->var],
                         evt->v1, ts_val(evt));
+            }
 
             break;
 
