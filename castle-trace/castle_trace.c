@@ -72,23 +72,23 @@ static char* cache_var_name[] = {[TRACE_CACHE_CHECKPOINT_ID]            = "check
                                  [TRACE_CACHE_T0_MEDIUM_OBJECTS_IOS_ID] = "t0_medium_objs_ios",
                                  [TRACE_CACHE_LARGE_OBJECT_IOS_ID]      = "large_object_ios",
                                  [TRACE_CACHE_BLOOM_FILTER_IOS_ID]      = "bloom_filter_ios",
-				 [TRACE_CACHE_BLK_T0_INT_HIT_MISS_ID]   = "", /* for hits, misses */
+                                 [TRACE_CACHE_BLK_T0_INT_HIT_MISS_ID]   = "", /* for hits, misses */
                                  [TRACE_CACHE_BLK_T0_INT_HITS_ID]       = "t0_int_get-hits",
                                  [TRACE_CACHE_BLK_T0_INT_MISSES_ID]     = "t0_int_get-misses",
                                  [TRACE_CACHE_BLK_T0_INT_HITS_PCT_ID]   = "t0_int_get-hit_pct",
                                  [TRACE_CACHE_BLK_T0_INT_MISSES_PCT_ID] = "t0_int_get-miss_pct",
-				 [TRACE_CACHE_BLK_T0_LEAF_HIT_MISS_ID]   = "", /* for hits, misses */
+                                 [TRACE_CACHE_BLK_T0_LEAF_HIT_MISS_ID]   = "", /* for hits, misses */
                                  [TRACE_CACHE_BLK_T0_LEAF_HITS_ID]       = "t0_leaf_get-hits",
                                  [TRACE_CACHE_BLK_T0_LEAF_MISSES_ID]     = "t0_leaf_get-misses",
                                  [TRACE_CACHE_BLK_T0_LEAF_HITS_PCT_ID]   = "t0_leaf_get-hit_pct",
                                  [TRACE_CACHE_BLK_T0_LEAF_MISSES_PCT_ID] = "t0_leaf_get-miss_pct",
-				 [TRACE_CACHE_BLK_INT_HIT_MISS_ID]       = "", /* for hits, misses */
+                                 [TRACE_CACHE_BLK_INT_HIT_MISS_ID]       = "", /* for hits, misses */
                                  [TRACE_CACHE_BLK_INT_HITS_ID]           = "roct_int_get-hits",
                                  [TRACE_CACHE_BLK_INT_MISSES_ID]         = "roct_int_get-misses",
                                  [TRACE_CACHE_BLK_INT_HITS_PCT_ID]       = "roct_int_get-hit_pct",
                                  [TRACE_CACHE_BLK_INT_MISSES_PCT_ID]     = "roct_int_get-miss_pct",
-				 [TRACE_CACHE_BLK_LEAF_HIT_MISS_ID]      = "", /* for hits, misses */
-				 [TRACE_CACHE_BLK_LEAF_HITS_ID]          = "roct_leaf_get-hits",
+                                 [TRACE_CACHE_BLK_LEAF_HIT_MISS_ID]      = "", /* for hits, misses */
+                                 [TRACE_CACHE_BLK_LEAF_HITS_ID]          = "roct_leaf_get-hits",
                                  [TRACE_CACHE_BLK_LEAF_MISSES_ID]        = "roct_leaf_get-misses",
                                  [TRACE_CACHE_BLK_LEAF_HITS_PCT_ID]      = "roct_leaf_get-hit_pct",
                                  [TRACE_CACHE_BLK_LEAF_MISSES_PCT_ID]    = "roct_leaf_get-miss_pct",
@@ -97,16 +97,16 @@ static char* cache_var_name[] = {[TRACE_CACHE_CHECKPOINT_ID]            = "check
                                  [TRACE_CACHE_BLK_GET_MISSES_ID]         = "block_get-misses",
                                  [TRACE_CACHE_BLK_GET_HITS_PCT_ID]       = "block_get-hit_pct",
                                  [TRACE_CACHE_BLK_GET_MISSES_PCT_ID]     = "block_get-miss_pct",
-				 [TRACE_CACHE_BLK_MERGE_HIT_MISS_ID]     = "",
-				 [TRACE_CACHE_BLK_MERGE_HITS_ID]         = "merge_get-hits",
-				 [TRACE_CACHE_BLK_MERGE_MISSES_ID]       = "merge_get-misses",
-				 [TRACE_CACHE_BLK_MERGE_HITS_PCT_ID]     = "merge_get-hit_pct",
-				 [TRACE_CACHE_BLK_MERGE_MISSES_PCT_ID]   = "merge_get-miss_pct",
-				 [TRACE_CACHE_BLK_NON_MERGE_HIT_MISS_ID] = "",
-				 [TRACE_CACHE_BLK_NON_MERGE_HITS_ID]     = "non_merge_get-hits",
-				 [TRACE_CACHE_BLK_NON_MERGE_MISSES_ID]   = "non_merge_get-misses",
-				 [TRACE_CACHE_BLK_NON_MERGE_HITS_PCT_ID] = "non_merge_get-hit_pct",
-				 [TRACE_CACHE_BLK_NON_MERGE_MISSES_PCT_ID] = "non_merge_get-miss_pct"
+                                 [TRACE_CACHE_BLK_MERGE_HIT_MISS_ID]     = "",
+                                 [TRACE_CACHE_BLK_MERGE_HITS_ID]         = "merge_get-hits",
+                                 [TRACE_CACHE_BLK_MERGE_MISSES_ID]       = "merge_get-misses",
+                                 [TRACE_CACHE_BLK_MERGE_HITS_PCT_ID]     = "merge_get-hit_pct",
+                                 [TRACE_CACHE_BLK_MERGE_MISSES_PCT_ID]   = "merge_get-miss_pct",
+                                 [TRACE_CACHE_BLK_NON_MERGE_HIT_MISS_ID] = "",
+                                 [TRACE_CACHE_BLK_NON_MERGE_HITS_ID]     = "non_merge_get-hits",
+                                 [TRACE_CACHE_BLK_NON_MERGE_MISSES_ID]   = "non_merge_get-misses",
+                                 [TRACE_CACHE_BLK_NON_MERGE_HITS_PCT_ID] = "non_merge_get-hit_pct",
+                                 [TRACE_CACHE_BLK_NON_MERGE_MISSES_PCT_ID] = "non_merge_get-miss_pct"
 };
 
 static char* merge_var_name[] = {
@@ -179,14 +179,14 @@ static void decode_trace(c_trc_evt_t *evt)
                         trace_type_name[TRACE_VALUE], cache_var_name[++evt->var],
                         evt->v2, ts_val(evt));
 
-		if(evt->v1 || evt->v2) { /* guarantees a non-zero denominator */
-		    p1 = (100 * evt->v1) / (evt->v1 + evt->v2);
+                if(evt->v1 || evt->v2) { /* guarantees a non-zero denominator */
+                    p1 = (100 * evt->v1) / (evt->v1 + evt->v2);
                     p2 = (100 * evt->v2) / (evt->v1 + evt->v2);
-		}
-		else {
-		    p1 = 0;
-		    p2 = 0; /* set both percentages to zero */
-		}
+                }
+                else {
+                    p1 = 0;
+                    p2 = 0; /* set both percentages to zero */
+                }
                 printf("***%s(%s, %lu, "ts_fmt")\n",
                         trace_type_name[evt->type], cache_var_name[++evt->var],
                         p1, ts_val(evt));
