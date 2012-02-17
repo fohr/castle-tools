@@ -25,6 +25,6 @@ else
     usage
 fi
 
-vertree_id=$(cat /sys/fs/castle-fs/versions/$version | grep "VertreeId:" | sed -e "s/.*0x\([0-9a-f]*\)/\1/g")
+vertree_id=$(cat /sys/fs/castle-fs/versions/$version/info | grep "VertreeId:" | sed -e "s/.*0x\([0-9a-f]*\)/\1/g")
 
 echo $(want_prefixed_hex $vertree_id)
