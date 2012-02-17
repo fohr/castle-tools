@@ -64,6 +64,12 @@ force_reload() {
 rh_status() {
     # run checks to determine if the service is running or use generic status
     kernel_fs_running
+    # Exit status as per: http://refspecs.linuxbase.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/iniscrptact.html
+    if [ ! $? -eq 0 ]; then
+	exit 3
+    else
+	exit 0
+    fi
 }
 
 rh_status_q() {
