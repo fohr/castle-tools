@@ -23,3 +23,11 @@ function want_prefixed_hex {
         echo "0x${1}"
     fi
 }
+
+# Convert decimal to hex.
+#
+# @param $1 decimal number
+#
+function dec_to_hex {
+    printf "%x\n" ${1}
+}
