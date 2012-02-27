@@ -124,10 +124,12 @@ static char* merge_var_name[] = {
 
 static char* io_sched_var_name[] = {
                         [TRACE_IO_SCHED_NUM_READ_IOS_ID]            = "read_ios",
-                        [TRACE_IO_SCHED_NUM_MERGE_IOS_ID]           = "merge_ios",
+                        [TRACE_IO_SCHED_NUM_MERGE_RD_IOS_ID]        = "merge_rd_ios",
+                        [TRACE_IO_SCHED_NUM_MERGE_WR_IOS_ID]        = "merge_wr_ios",
                         [TRACE_IO_SCHED_NUM_CHECKPOINT_IOS_ID]      = "checkpoint_ios",
                         [TRACE_IO_SCHED_BYTES_READ_IOS_ID]          = "read_bytes",
-                        [TRACE_IO_SCHED_BYTES_MERGE_IOS_ID]         = "merge_bytes",
+                        [TRACE_IO_SCHED_BYTES_MERGE_RD_IOS_ID]      = "merge_rd_bytes",
+                        [TRACE_IO_SCHED_BYTES_MERGE_WR_IOS_ID]      = "merge_wr_bytes",
                         [TRACE_IO_SCHED_BYTES_CHECKPOINT_IOS_ID]    = "checkpoint_bytes",
 };
 
