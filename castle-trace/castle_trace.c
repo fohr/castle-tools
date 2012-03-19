@@ -114,10 +114,6 @@ static char* merge_var_name[] = {
                         [TRACE_DA_INSERTS_DISABLED_ID]                  = "inserts_disabled",
                         [TRACE_DA_MERGE_MODLIST_ITER_INIT_ID]           = "modlist_iter_init",
                         [TRACE_DA_MERGE_UNIT_ID]                        = "merge_unit",
-                        [TRACE_DA_MERGE_UNIT_C2B_SYNC_WAIT_BT_NS_ID]    = "c2b_sync_wait_BT_ns",
-                        [TRACE_DA_MERGE_UNIT_C2B_SYNC_WAIT_DATA_NS_ID]  = "c2b_sync_wait_DATA_ns",
-                        [TRACE_DA_MERGE_UNIT_GET_C2B_NS_ID]             = "get_c2b_ns",
-                        [TRACE_DA_MERGE_UNIT_MOBJ_COPY_NS_ID]           = "mobj_copy_ns",
                         [TRACE_DA_MERGE_UNIT_CACHE_BTREE_EFFICIENCY_ID] = "pct_btree_efficiency",
                         [TRACE_DA_MERGE_UNIT_CACHE_DATA_EFFICIENCY_ID]  = "pct_data_efficiency"
 };
